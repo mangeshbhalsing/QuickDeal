@@ -10,7 +10,7 @@
 	<link href="${bootstrapCss}" rel="stylesheet" />
 <spring:url value="/resources/core/js/jq.js" var="jqJs" />
 	<script src="${jqJs}"></script>
-<link style="css" rel="stylesheet" href="cascadestylesheet.css" >
+<!-- <link style="css" rel="stylesheet" href="cascadestylesheet.css" > -->
 
 
 </head>

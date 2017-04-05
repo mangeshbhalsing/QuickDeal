@@ -30,6 +30,9 @@
 		<jsp:include page="registration.jsp"></jsp:include>
 	</c:if>
 
+<c:if test="${registred==true}">
+		<jsp:include page="login.jsp"></jsp:include>
+	</c:if>
 
 
 	

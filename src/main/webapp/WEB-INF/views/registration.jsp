@@ -1,27 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 
+
 </head>
 <body>
-<h2>this is registration page</h2>
+	<h2>this is registration page</h2>
+	<c:url var="addAction" value="register"></c:url>
+	<form:form action="${addAction}" method="post" commandName="form-reg">
+		
+		
 
-<form action="">
-USER ID:<input type="text" name="user ID"> <br>
+		UserID: <input class="form-control" type="text" name="id">
+		<br>
+		Name: <input class="form-control" type="text" name="name">
+		<br>
+		Password: <input class="form-control" type="text" name="password">
+		<br>
+		
+		Contact: <input class="form-control" type="text" name="contact">
+		<br>
+		<!-- (AFTER ADDING THIS IT GOT STARTING GETTING INTO METHOD-->
+		<input type="submit" value="REGISTER">
+		<br>
 
-PASSWORD:<input type="password" name="password"> <br>
+	</form:form>
 
-CONTACT:<input type="text" name="contact"> <br>
-
-EMAIL ID:<input type="text" name="email"> <br>
-
-ADDRESS:<input type="text" name="address"> <br>
-
-<input type= "submit" value= "Register">
-
-
-</form>
 </body>
 </html>

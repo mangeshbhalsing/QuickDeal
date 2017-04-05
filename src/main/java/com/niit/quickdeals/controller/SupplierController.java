@@ -15,52 +15,48 @@ import com.niit.quickdeals.dao.SupplierDAO;
 
 
 
-
-
 @Controller
 public class SupplierController {
 
-	private static Logger log = LoggerFactory.getLogger(CategoryController.class);
+	private static Logger log = LoggerFactory.getLogger(SupplierController.class);
+
+	@Autowired
+	private Supplier supplier;
 
 	@Autowired
 	private SupplierDAO supplierDAO;
 
-	@Autowired
-	private Supplier supplier;
-	
-	@RequestMapping(value = "/manage_Suppliers", method = RequestMethod.GET)
-	public String listCategories(Model model) {
-		
-		log.debug(" Starting of the method listCategories");
+	@RequestMapping(value = "/manage_suppliers", method = RequestMethod.GET)
+	public String listSuppliers(Model model) {
+
+		//log.debug(" Starting of the method listCategories");
 		model.addAttribute("supplier", supplier);
 		model.addAttribute("supplierList", supplierDAO.list());
 		model.addAttribute("isAdminClickedSuppliers", "true");
-		log.debug(" End of the method listCategories");
+		//log.debug(" End of the method listCategories");
 		return "/admin/AdminHome";
 	}
-	
-	
-	
 
 	@RequestMapping(value = "/manage_supplier_add", method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute("supplier") Supplier supplier, Model model) {
-		log.debug(" Starting of the method addCategory");
-		log.info("id:" + supplier.getId());
-		if (supplierDAO.save(supplier) == true) {
-			
-			model.addAttribute("msg", "Successfully created/updated the supplier");
+	public String addSupplier(@ModelAttribute("supplier") Supplier supplier, Model model) {
+		//log.debug(" Starting of the method addCategory");
+	//	log.info("id:" + category.getId());
+		if (supplierDAO.saveOrUpdate(supplier) == true) {
+
+			model.addAttribute("msg", "Successfully created/updated the caetgory");
 		} else {
-			model.addAttribute("msg", "not able created/updated the supplier");
+			model.addAttribute("msg", "not able created/updated the caetgory");
 		}
 		model.addAttribute("supplier", supplier);
 		model.addAttribute("supplierList", supplierDAO.list());
 		model.addAttribute("isAdminClickedSuppliers", "true");
-		log.debug(" Ending of the method addCategory");
+		//log.debug(" Ending of the method addCategory");
 		return "/admin/AdminHome";
 	}
 
 	@RequestMapping("manage_supplier_remove/{id}")
-//	public ModelAndView deleteCategory(@PathVariable("id") String id, Model model) throws Exception {
+	// public ModelAndView deleteCategory(@PathVariable("id") String id, Model
+	// model) throws Exception {
 	public String deleteSupplier(@PathVariable("id") String id, Model model) throws Exception {
 		boolean flag = supplierDAO.delete(id);
 
@@ -73,21 +69,21 @@ public class SupplierController {
 		 * model.addAttribute("categoryList", this.categoryDAO.list());
 		 */
 		model.addAttribute("msg", msg);
-	//	ModelAndView mv = new ModelAndView("forward:/manage_categories");
-		//return mv;
+		// ModelAndView mv = new ModelAndView("forward:/manage_categories");
+		// return mv;
 
-		return "forward:/manage_Suppliers";
+		return "forward:/manage_suppliers";
 	}
 
 	@RequestMapping("manage_supplier_edit/{id}")
-	public String editCategory(@PathVariable("id") String id, Model model) {
+	public String editSupplier(@PathVariable("id") String id, Model model) {
 		// categoryDAO.saveOrUpdate(category);
-		log.debug(" Starting of the method editCategory");
+	//	log.debug(" Starting of the method editCategory");
 
-		supplier =supplierDAO.getSupplierByID(id);
-		//model.addAttribute("category", category);
-		log.debug(" End of the method editCategory");
-		return "forward:/manage_Suppliers";
+		supplier = supplierDAO.getSupplierByID(id);
+		// model.addAttribute("category", category);
+		//log.debug(" End of the method editCategory");
+		return "forward:/manage_suppliers";
 	}
 
 }

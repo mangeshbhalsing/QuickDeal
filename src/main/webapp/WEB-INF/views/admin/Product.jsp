@@ -5,13 +5,13 @@
 <html>
 <head>
 <title>Product Page</title>
-
+ <spring:url value="/resources/images/" var="image" />
 </head>
 <body>
 ${msg}
 	<h1>Add a Product</h1>
-	 <c:url var="addAction" value="/manage_product_add"></c:url>
-	<form:form action="${addAction}" commandName="product"  method="post">
+	<c:url var="addAction" value="/manage_product_add"></c:url>
+	<form:form action="${addAction}" commandName="product"  method="post" >
 		<table>
 			<tr>
 				<td><form:label path="id"> <spring:message text="ID" />	</form:label></td>
@@ -32,6 +32,11 @@ ${msg}
 				<td><form:label path="description"> <spring:message text="Description"/></form:label></td>
 				<td><form:input path="description" required="true" /></td>
 			</tr>
+			<tr>
+				<td><form:label path="price"> <spring:message text="Price"/></form:label></td>
+				<td><form:input path="price" required="true" /></td>
+			</tr>
+			
 			
 				
 			<tr>
@@ -51,22 +56,28 @@ ${msg}
 				<th width="80">Product ID</th>
 				<th width="120">Product Name</th>
 				<th width="120">Product Description</th>
+				<th width="120">Product Price</th>
 				<th width="60">Edit</th>
 				<th width="60">Delete</th>
 			</tr>
-			<c:forEach items="${productList}" var="product">
-				<tr>
 			
+		
+			<c:forEach items="${productList}" var="product" >
+				<tr>
 					<td>${product.id}</td>
 					<td>${product.name}</td>
 					<td>${product.description}</td>
+					<td>${product.price}</td>
+				<%-- <img src="${image}/${product.id}.jpg" height="50" , width="100" /> --%>
+					
+					
 					<td><a href="<c:url value='/manage_product_edit/${product.id}' />">Edit</a></td>
 					
 					<td><a href="<c:url value='/manage_product_remove/${product.id}' />">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
-	</c:if> 
+	</c:if>
 </body>
 </html>
 

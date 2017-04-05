@@ -4,13 +4,13 @@
 
 <html>
 <head>
-<title>Category Page</title>
+<title>Supplier Page</title>
 
 </head>
 <body>
 ${msg}
 	<h1>Add a Supplier</h1>
-	<%-- <c:url var="addAction" value="/manage_supplier_add"></c:url>
+	<c:url var="addAction" value="/manage_supplier_add"></c:url>
 	<form:form action="${addAction}" commandName="supplier"  method="post">
 		<table>
 			<tr>
@@ -28,10 +28,10 @@ ${msg}
 				<td><form:label path="name">	<spring:message text="Name" /> </form:label></td>
 				<td><form:input path="name" required="true" /></td>
 			</tr>
-			<tr>
-				<td><form:label path="description"> <spring:message text="Description"/></form:label></td>
-				<td><form:input path="description" required="true" /></td>
-			</tr>
+			 <tr>
+				<td><form:label path="address"> <spring:message text="Address"/></form:label></td>
+				<td><form:input path="address" required="true" /></td>
+			</tr> 
 			
 				
 			<tr>
@@ -50,7 +50,7 @@ ${msg}
 			<tr>
 				<th width="80">Supplier ID</th>
 				<th width="120">Supplier Name</th>
-				<th width="120">Supplier Description</th>
+				<th width="120">Supplier Address</th>
 				<th width="60">Edit</th>
 				<th width="60">Delete</th>
 			</tr>
@@ -58,14 +58,14 @@ ${msg}
 				<tr>
 					<td>${supplier.id}</td>
 					<td>${supplier.name}</td>
-					<td>${supplier.description}</td>
-					<td><a href="<c:url value='/manage_category_edit/${supplier.id}' />">Edit</a></td>
+					 <td>${supplier.address}</td>
+					<td><a href="<c:url value='/manage_supplier_edit/${supplier.id}' />">Edit</a></td>
 					
-					<td><a href="<c:url value='/manage_category_remove/${supplier.id}' />">Delete</a></td>
+					<td><a href="<c:url value='/manage_supplier_remove/${supplier.id}' />">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
-	</c:if> --%>
+	</c:if>
 </body>
 </html>
 

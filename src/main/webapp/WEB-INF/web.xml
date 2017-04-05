@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
- <display-name>Spring4MVCHelloWorldDemo Web Application</display-name>
+ <display-name>quickdeals</display-name>
  
  <servlet>
     <servlet-name>dispatcher</servlet-name>
@@ -22,5 +22,31 @@
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
  </servlet-mapping>
+
  
+   <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+       /WEB-INF/dispatcher-servlet.xml,/WEB-INF/springsecurity-servlet.xml
+        </param-value>
+    </context-param> 
+     
+    <!-- Spring Security  Filter -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+ 
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+ 
+  <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <session-config>
+    <session-timeout>40</session-timeout>
+    </session-config>
+  
 </web-app>

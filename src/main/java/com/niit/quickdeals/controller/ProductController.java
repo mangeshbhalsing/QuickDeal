@@ -13,42 +13,44 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.niit.quickdeals.categorymodel.Product;
 import com.niit.quickdeals.dao.ProductDAO;
 
+
+
 @Controller
 public class ProductController {
 
 	private static Logger log = LoggerFactory.getLogger(ProductController.class);
 
 	@Autowired
-	private ProductDAO productDAO;
-
-	@Autowired
 	private Product product;
 
-	@RequestMapping(value = "/manage_products", method = RequestMethod.GET)
-	public String listCategories(Model model) {
+	@Autowired
+	private ProductDAO productDAO;
 
-		// log.debug(" Starting of the method listProducts");
+	@RequestMapping(value = "/manage_products", method = RequestMethod.GET)
+	public String listProducts(Model model) {
+
+		//log.debug(" Starting of the method listProducts");
 		model.addAttribute("product", product);
 		model.addAttribute("productList", productDAO.list());
 		model.addAttribute("isAdminClickedProducts", "true");
-		// log.debug(" End of the method listCategories");
+	//	log.debug(" End of the method listCategories");
 		return "/admin/AdminHome";
 	}
 
 	@RequestMapping(value = "/manage_product_add", method = RequestMethod.POST)
 	public String addProduct(@ModelAttribute("product") Product product, Model model) {
-		log.debug(" Starting of the method addProduct");
-		log.info("id:" + product.getId());
-		if (productDAO.saveOrUpdate(product) == true) {
-
-			model.addAttribute("msg", "Successfully created/updated the caetgory");
+		//log.debug(" Starting of the method addCategory");
+		//log.info("id:" + category.getId());
+		if (productDAO.saveOrUpdate(product)== true) {
+			
+			model.addAttribute("msg", "Successfully created/updated the product");
 		} else {
-			model.addAttribute("msg", "not able created/updated the caetgory");
+			model.addAttribute("msg", "not able created/updated the product");
 		}
 		model.addAttribute("product", product);
 		model.addAttribute("productList", productDAO.list());
 		model.addAttribute("isAdminClickedProducts", "true");
-		// log.debug(" Ending of the method addCategory");
+		//log.debug(" Ending of the method addCategory");
 		return "/admin/AdminHome";
 	}
 
@@ -70,18 +72,18 @@ public class ProductController {
 		// ModelAndView mv = new ModelAndView("forward:/manage_categories");
 		// return mv;
 
-		return "forward:/manage_Products";
+		return "forward:/manage_products";
 	}
 
 	@RequestMapping("manage_product_edit/{id}")
 	public String editProduct(@PathVariable("id") String id, Model model) {
 		// categoryDAO.saveOrUpdate(category);
-		log.debug(" Starting of the method editProduct");
+		//log.debug(" Starting of the method editCategory");
 
 		product = productDAO.getProductByID(id);
 		// model.addAttribute("category", category);
-		log.debug(" End of the method editProduct");
-		return "forward:/manage_categories";
+		//log.debug(" End of the method editCategory");
+		return "forward:/manage_products";
 	}
 
 }

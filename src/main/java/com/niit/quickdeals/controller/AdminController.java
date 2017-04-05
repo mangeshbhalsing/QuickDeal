@@ -49,23 +49,8 @@ public class AdminController {
 		return mv;
 	}
 
-	@RequestMapping("/manage_Suppliers")
-	  public ModelAndView manageSuppliers() {
-		ModelAndView mv = new ModelAndView("/admin/AdminHome");
-		mv.addObject("isUserClickedSuppliers", "true");
-		List<Supplier> supplierList = supplierDAO.list();
-		mv.addObject("supplierList", supplierList);
-		mv.addObject("supplier", supplier);
-		
-		return mv;
-		
-		
-		}
-
-	
-
 	@RequestMapping("/manage_Products")
-	public ModelAndView manageProdcuts() {
+	public ModelAndView manageProducts() {
 		//log.debug("running manage categorier");
 		ModelAndView mv = new ModelAndView("/admin/AdminHome");
 		mv.addObject("isUserClickedProducts", "true");
@@ -74,7 +59,20 @@ public class AdminController {
 		mv.addObject("product", product);//
 		//log.debug("ending manage categorier");
 		return mv;
-
 	}
+	
+	
+	@RequestMapping("/manage_Suppliers")
+	public ModelAndView manageSuppliers() {
+		//log.debug("running manage categorier");
+		ModelAndView mv = new ModelAndView("/admin/AdminHome");
+		mv.addObject("isUserClickedSupplier", "true");
+		List<Supplier> supplierList = supplierDAO.list();
+		mv.addObject("supplierList", supplierList);
+		mv.addObject("supplier", supplier);//
+		//log.debug("ending manage categorier");
+		return mv;
+	}
+	
 
 }

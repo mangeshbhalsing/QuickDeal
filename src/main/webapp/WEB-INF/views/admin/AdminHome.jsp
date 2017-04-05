@@ -17,23 +17,25 @@
 		<jsp:include page="Category.jsp"></jsp:include>
 	</c:if>
 	
-	<c:if test="${isUserClickedProducts==true}">
-		<jsp:include page="Product.jsp"></jsp:include>
-	</c:if>
-
-	
-	
-
-
-<c:if test="${isAdminClickedSuppliers==true}">
-		<jsp:include page="Supplier.jsp"></jsp:include>
-	</c:if>
-
 	<c:if test="${isAdminClickedCategories==true}">
 		<jsp:include page="Category.jsp"></jsp:include>
 	</c:if>
 
-	
+	<c:if test="${isUserClickedProducts==true}">
+		<jsp:include page="Product.jsp"></jsp:include>
+	</c:if>
 
+<c:if test="${isAdminClickedProducts==true}">
+		<jsp:include page="Product.jsp"></jsp:include>
+	</c:if>
+	
+	<c:if test="${isUserClickedSupplier==true}">
+		<jsp:include page="Supplier.jsp"></jsp:include>
+	</c:if>
+	
+	<c:if test="${isAdminClickedSuppliers==true}">
+		<jsp:include page="Supplier.jsp"></jsp:include>
+	</c:if>
+	
 </body>
 </html>
