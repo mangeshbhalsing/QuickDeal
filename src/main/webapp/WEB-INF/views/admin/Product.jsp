@@ -11,7 +11,7 @@
 ${msg}
 	<h1>Add a Product</h1>
 	<c:url var="addAction" value="/manage_product_add"></c:url>
-	<form:form action="${addAction}" commandName="product"  method="post" >
+	<form:form action="${addAction}" commandName="product"  method="post" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td><form:label path="id"> <spring:message text="ID" />	</form:label></td>
@@ -36,6 +36,14 @@ ${msg}
 				<td><form:label path="price"> <spring:message text="Price"/></form:label></td>
 				<td><form:input path="price" required="true" /></td>
 			</tr>
+			<tr>
+                    <label  for="file">Upload a file</label>
+                        <form:input type="file" path="file" id="file" class="form-control input-sm"/>
+                        <div class="has-error">
+                            <form:errors path="file" class="help-inline"/>
+                        </div>
+               </tr>    
+                
 			
 			
 				
@@ -53,6 +61,7 @@ ${msg}
 	<c:if test="${!empty productList}">
 		<table class="tg">
 			<tr>
+			<th width="80">Product Image</th>
 				<th width="80">Product ID</th>
 				<th width="120">Product Name</th>
 				<th width="120">Product Description</th>
@@ -64,6 +73,10 @@ ${msg}
 		
 			<c:forEach items="${productList}" var="product" >
 				<tr>
+				
+					<td><img alt=""
+						src="<c:url value="/resources/images/${product.id }.jpg" />"
+						class="img-responsive" width="100"></td>
 					<td>${product.id}</td>
 					<td>${product.name}</td>
 					<td>${product.description}</td>

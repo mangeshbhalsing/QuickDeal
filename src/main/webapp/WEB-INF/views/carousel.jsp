@@ -48,10 +48,6 @@
     </a>
   </div>
 </div>
-<spring:url value="/resources/core/js/jquery.js" var="jqueryJs" />
-<script src="${jqueryJs}"></script>
 
-<spring:url value="/resources/core/js/bootstrap.min.js" var="bootstrapJs" />
-<script src="${bootstrapJs}"></script>
 </body>
 </html>

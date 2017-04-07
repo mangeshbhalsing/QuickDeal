@@ -25,6 +25,8 @@ public class ProductController {
 
 	@Autowired
 	private ProductDAO productDAO;
+	
+	
 
 	@RequestMapping(value = "/manage_products", method = RequestMethod.GET)
 	public String listProducts(Model model) {
@@ -37,6 +39,8 @@ public class ProductController {
 		return "/admin/AdminHome";
 	}
 
+	
+	
 	@RequestMapping(value = "/manage_product_add", method = RequestMethod.POST)
 	public String addProduct(@ModelAttribute("product") Product product, Model model) {
 		//log.debug(" Starting of the method addCategory");

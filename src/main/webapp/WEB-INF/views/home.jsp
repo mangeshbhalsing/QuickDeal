@@ -5,21 +5,34 @@
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<!-- -------------------------------------------------Stylesheets and JS------------------------------ -->
+<script src="resources/core/js/jquery.js"></script>
+<script src="resources/core/js/bootstrap.js"></script>
+<script src="resources/core/js/logreg.js"></script>
+
+<link href="resources/core/css/bootstrap.css" rel="stylesheet" />
+ <link href="resources/core/css/logreg.css" rel="stylesheet" />
+ <link href="resources/core/css/navbar.css" rel="stylesheet" />
+
+
 </head>
+
+
+
 <body>
-<body>
-	<jsp:include page="categorymenu.jsp"></jsp:include>
+<jsp:include page="categorymenu.jsp"></jsp:include>
 
 
-
-	<jsp:include page="carousel.jsp"></jsp:include>
+	<c:if test="${thisIsHome==true}">
+		<jsp:include page="carousel.jsp"></jsp:include>
+	</c:if>
 
 	<h2>${msg}</h2>
 
 	${loginMessage}
 	<c:if test="${isAdmin==true}">
 		<jsp:include page="admin/AdminHome.jsp"></jsp:include>
-		
+
 	</c:if>
 
 	<c:if test="${isUserClickedLogin==true}">
@@ -30,17 +43,14 @@
 		<jsp:include page="registration.jsp"></jsp:include>
 	</c:if>
 
-<c:if test="${registred==true}">
+	<c:if test="${registred==true}">
 		<jsp:include page="login.jsp"></jsp:include>
 	</c:if>
 
 
+<!--  -->
+
 	
-	
-	</div>
-
-
-
 
 
 	<jsp:include page="footer.jsp"></jsp:include>

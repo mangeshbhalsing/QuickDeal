@@ -42,6 +42,8 @@ private UserDAO userDAO;
 		// mv.addObject("not empty"," welcome to quickdeals");
 		// show what data you have to carry on home page
 		mv.addObject("message", "welcome to quickdeals");
+		mv.addObject("thisIsHome", "true");
+		
 		//log.debug("ending landing page");
 		return mv;
 	}
@@ -62,15 +64,15 @@ private UserDAO userDAO;
 	 * mv; }
 	 */
 
-	@RequestMapping("/registration")
+	/*@RequestMapping("/registration")
 	public ModelAndView registerationpage() {
 		//log.debug("running registeration page");
 		System.out.println("click on registeration link");
 		ModelAndView mv = new ModelAndView("/home");
-		mv.addObject("isUserClickRegister", "true");
+		//mv.addObject("isUserClickRegister", "true");
 		//log.debug("ending registeration page");
 		return mv;
-	}
+	}*/
 
 	/*@RequestMapping("/validation")
 	public ModelAndView validation(@RequestParam("username") String id, @RequestParam("password") String pwd) {
@@ -150,6 +152,21 @@ private UserDAO userDAO;
 		session.invalidate();
 		//mv.addObject("isUserClickLogout","true");
 	//	log.debug("endig logout  method");
+		mv.addObject("message", "welcome to quickdeals");
+		mv.addObject("thisIsHome", "true");
+		return mv;
+
+	}
+	
+	@RequestMapping("/refresh")
+	public ModelAndView reload() {
+		//log.debug("running logout  method");
+		ModelAndView mv = new ModelAndView("home");
+		mv.isReference();
+		mv.addObject("thisIsHome", "true");
+		//mv.addObject("isUserClickLogout","true");
+	//	log.debug("endig logout  method");
+		
 		return mv;
 
 	}
