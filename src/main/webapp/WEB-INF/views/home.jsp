@@ -6,53 +6,79 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- -------------------------------------------------Stylesheets and JS------------------------------ -->
-<script src="resources/core/js/jquery.js"></script>
-<script src="resources/core/js/bootstrap.js"></script>
+ <script src="resources/core/js/jquery.js"></script> 
+
 <script src="resources/core/js/logreg.js"></script>
 
-<link href="resources/core/css/bootstrap.css" rel="stylesheet" />
+<jsp:include page="linking.jsp"></jsp:include>
+
+
+
  <link href="resources/core/css/logreg.css" rel="stylesheet" />
- <link href="resources/core/css/navbar.css" rel="stylesheet" />
+ 
 
 
 </head>
 
 
-
 <body>
+
 <jsp:include page="categorymenu.jsp"></jsp:include>
 
 
+<c:if test="${thisIsProductPage==true}">
+		<jsp:include page="productDetails.jsp"></jsp:include>
+	</c:if>
+
+
+
+	<center><h2>${msg}</h2></center>
+
 	<c:if test="${thisIsHome==true}">
 		<jsp:include page="carousel.jsp"></jsp:include>
+		<jsp:include page="productList.jsp"></jsp:include>
 	</c:if>
 
-	<h2>${msg}</h2>
-
-	${loginMessage}
-	<c:if test="${isAdmin==true}">
-		<jsp:include page="admin/AdminHome.jsp"></jsp:include>
+	
+<%-- 	<c:if test="${isAdmin==true}">
+		<jsp:include page="Admin/AdminHome.jsp"></jsp:include>
 
 	</c:if>
-
+ --%>
 	<c:if test="${isUserClickedLogin==true}">
 		<jsp:include page="login.jsp"></jsp:include>
 
 	</c:if>
+	
 	<c:if test="${isUserClickRegister==true}">
 		<jsp:include page="registration.jsp"></jsp:include>
 	</c:if>
 
-	<c:if test="${registred==true}">
-		<jsp:include page="login.jsp"></jsp:include>
+
+<c:if test="${ShowCart==true}">
+		<jsp:include page="cart.jsp"></jsp:include>
 	</c:if>
 
 
-<!--  -->
+<%-- <c:if test="${displayCart==true}">
+		<jsp:include page="myCart.jsp"></jsp:include>
+	</c:if>
+ --%>
 
+
+
+	<c:if test="${registred==true}">
+		<jsp:include page="login.jsp"></jsp:include>
+	</c:if>
+	
+	<c:if test="${isUserClickedLogin==true}">
+<jsp:include page="carousel.jsp"></jsp:include>
+<jsp:include page="productList.jsp"></jsp:include>
+</c:if>
+	
 	
 
-
-	<jsp:include page="footer.jsp"></jsp:include>
+	
 </body>
 </html>
+<jsp:include page="footer.jsp"></jsp:include>

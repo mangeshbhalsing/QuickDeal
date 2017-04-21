@@ -9,25 +9,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.niit.quickdeals.categorymodel.Category;
+import com.niit.quickdeals.categorymodel.Product;
+import com.niit.quickdeals.categorymodel.Supplier;
 import com.niit.quickdeals.categorymodel.User;
+import com.niit.quickdeals.dao.CategoryDAO;
+import com.niit.quickdeals.dao.ProductDAO;
+import com.niit.quickdeals.dao.SupplierDAO;
 import com.niit.quickdeals.dao.UserDAO;
 
 
 @Controller
 public class HomeController {
-	private static Logger log = LoggerFactory.getLogger(HomeController.class);
+	/*private static Logger log = LoggerFactory.getLogger(HomeController.class);*/
 	
 @Autowired
 private User user;
 
 @Autowired
 private UserDAO userDAO;
-	
 
+@Autowired
+private Product product;
+
+@Autowired
+private ProductDAO productDAO;
+
+@Autowired
+private Category category;
+
+@Autowired
+
+private CategoryDAO categoryDAO;
+
+@Autowired
+private Supplier supplier;
+	
+@Autowired
+private SupplierDAO supplierDAO;
 
 	// http://localhost:8080/qucikdeals/
 	@Autowired
@@ -38,15 +62,31 @@ private UserDAO userDAO;
 	//	log.debug("running landing page");
 		System.out.println("starting the method showing homepage");
 		// specifying which page you have to navigate
-		ModelAndView mv = new ModelAndView("home");
+		ModelAndView mv = new ModelAndView("/home");
+		session.setAttribute("category", category);
+		session.setAttribute("product", product);
+		session.setAttribute("supplier", supplier);
+		session.setAttribute("categoryList", categoryDAO.list());
+		session.setAttribute("producList", productDAO.list());
+		session.setAttribute("supplierList", supplierDAO.list());
+		
+		session.setAttribute("categoryList", categoryDAO.list());		
+		session.setAttribute("supplierList", supplierDAO.list());		
+		session.setAttribute("productList", productDAO.list());
+		
+		
+		
 		// mv.addObject("not empty"," welcome to quickdeals");
 		// show what data you have to carry on home page
 		mv.addObject("message", "welcome to quickdeals");
 		mv.addObject("thisIsHome", "true");
 		
+		
 		//log.debug("ending landing page");
 		return mv;
 	}
+	
+	
 
 	@RequestMapping("/login")
 	public ModelAndView loginpage() {
@@ -54,6 +94,15 @@ private UserDAO userDAO;
 		System.out.println("click on login link");
 		ModelAndView mv = new ModelAndView("/home");
 		mv.addObject("isUserClickedLogin", "true");
+	//	log.debug("ending login page");
+		return mv;
+	}
+
+	@RequestMapping("/women")
+	public ModelAndView womenSort() {
+	//	log.debug("running login page");
+		ModelAndView mv = new ModelAndView("/home");
+		mv.addObject("isUserClickedWomen", "true");
 	//	log.debug("ending login page");
 		return mv;
 	}
@@ -110,23 +159,25 @@ private UserDAO userDAO;
 	@RequestMapping(value = "validate", method = RequestMethod.GET)
 	public ModelAndView validate(HttpServletRequest request ,HttpServletRequest response) throws Exception
 	{
-		log.debug("Starting of the method validate");
+	//	log.debug("Starting of the method validate");
 		ModelAndView mv = new ModelAndView("/home");
 		
 		Authentication auth= SecurityContextHolder.getContext().getAuthentication();
 		
 		String userID = auth.getName();
-		log.info( userID );
+		//log.info( userID );
 		session.setAttribute("loggedInUser", userID );
 		
 		if(request.isUserInRole("ROLE_ADMIN"))
 		{
-			log.debug("Logged in as Admin");
-			session.setAttribute("isAdmin", "true");
+		//	log.debug("Logged in as Admin");
+			mv=new  ModelAndView("/Admin/AdminHome");
+
+			//session.setAttribute("isAdmin", "true");
 			session.setAttribute("AdminLoggedIn","true");
 		}
 		else{
-			log.debug("Logged in as User");
+			//log.debug("Logged in as User");
 			session.setAttribute("isAdmin", "false");
 //			List<MyCart> cartList = cartDAO.list(name);
 //			mv.addObject("cartList"	, cartList);
@@ -135,11 +186,26 @@ private UserDAO userDAO;
 			
 		}
 		mv.addObject("successMessage", "Valid Credentials ");
+		mv.addObject("thisIsHome", true);
+		
 	    session.setAttribute("loginMessage", "Welcome :" + userID);
+	    session.setAttribute("userLogin", "true");
 	    
 	    session.setAttribute("loggedInUser", userID );
 	    
-		log.debug("Ending of the method validate");
+	    
+	    session.setAttribute("category", category);
+		session.setAttribute("product", product);
+		session.setAttribute("supplier", supplier);
+		session.setAttribute("categoryList", categoryDAO.list());
+		session.setAttribute("producList", productDAO.list());
+		session.setAttribute("supplierList", supplierDAO.list());
+		
+		session.setAttribute("categoryList", categoryDAO.list());		
+		session.setAttribute("supplierList", supplierDAO.list());		
+		session.setAttribute("productList", productDAO.list());
+	    
+	//	log.debug("Ending of the method validate");
 		return mv;
 	}
 	
@@ -154,21 +220,39 @@ private UserDAO userDAO;
 	//	log.debug("endig logout  method");
 		mv.addObject("message", "welcome to quickdeals");
 		mv.addObject("thisIsHome", "true");
+		session.setAttribute("category", category);
+		session.setAttribute("product", product);
+		session.setAttribute("supplier", supplier);
+		session.setAttribute("categoryList", categoryDAO.list());
+		session.setAttribute("producList", productDAO.list());
+		session.setAttribute("supplierList", supplierDAO.list());
+		
+		session.setAttribute("categoryList", categoryDAO.list());		
+		session.setAttribute("supplierList", supplierDAO.list());		
+		session.setAttribute("productList", productDAO.list());
 		return mv;
 
 	}
 	
 	@RequestMapping("/refresh")
-	public ModelAndView reload() {
+	public ModelAndView Home() {
 		//log.debug("running logout  method");
 		ModelAndView mv = new ModelAndView("home");
 		mv.isReference();
 		mv.addObject("thisIsHome", "true");
-		//mv.addObject("isUserClickLogout","true");
-	//	log.debug("endig logout  method");
+		session.setAttribute("category", category);
+		session.setAttribute("product", product);
+		session.setAttribute("supplier", supplier);
+		session.setAttribute("categoryList", categoryDAO.list());
+		session.setAttribute("producList", productDAO.list());
+		session.setAttribute("supplierList", supplierDAO.list());
+		
+		session.setAttribute("categoryList", categoryDAO.list());		
+		session.setAttribute("supplierList", supplierDAO.list());		
+		session.setAttribute("productList", productDAO.list());
 		
 		return mv;
-
-	}
-
+		
+		}
+	
 }

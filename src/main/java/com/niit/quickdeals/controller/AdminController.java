@@ -2,6 +2,10 @@ package com.niit.quickdeals.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,65 +18,110 @@ import com.niit.quickdeals.dao.CategoryDAO;
 import com.niit.quickdeals.dao.ProductDAO;
 import com.niit.quickdeals.dao.SupplierDAO;
 
+
+
 @Controller
 public class AdminController {
-	
-	@Autowired
-	private Category category;
-	
+
 	@Autowired
 	private CategoryDAO categoryDAO;
-	
+
 	@Autowired
-	private Product product;
-	
-	@Autowired
-	private ProductDAO productDAO;
-	
+	private Category category;
+
 	@Autowired
 	private Supplier supplier;
 
 	@Autowired
 	private SupplierDAO supplierDAO;
-	
-	//@Autowired
-	//HttpSession session;
+
+	@Autowired
+	private Product product;
+
+	@Autowired
+	private ProductDAO productDAO;
+
+	@Autowired
+	HttpSession session;
+
+	private static Logger log = LoggerFactory.getLogger(AdminController.class);
+
 	@RequestMapping("/manage_Categories")
 	public ModelAndView manageCategories() {
-		//log.debug("running manage categorier");
-		ModelAndView mv = new ModelAndView("/admin/AdminHome");
-		mv.addObject("isUserClickedCategories", "true");
+
+		log.debug("This is in the manage category");
+		session.getAttribute("loggedInUser");
+
+		// If user is logged check it is admin or not
+
+		ModelAndView mv = new ModelAndView("/Admin/AdminHome");
+		// get the Category from database.
+
 		List<Category> categoryList = categoryDAO.list();
+
 		mv.addObject("categoryList", categoryList);
-		mv.addObject("category", category);//
-		//log.debug("ending manage categorier");
+		mv.addObject("category", category);
+		mv.addObject("isAdminClickedCategories", "true");
+
+		log.debug("This is Ending of manage_Category");
+
+		return mv;
+	}
+
+	@RequestMapping("/manage_Suppliers")
+	public ModelAndView manageSupplier() {
+
+		log.debug("This is in the manage Supplier");
+
+		session.getAttribute("loggedInUser");
+
+		ModelAndView mv = new ModelAndView("/Admin/AdminHome");
+
+		List<Supplier> supplierList = supplierDAO.list();
+
+		mv.addObject("supplierList", supplierList);
+
+		mv.addObject("supplier", supplier);
+
+		mv.addObject("isAdminClickedSuppliers", true);
+
+		log.debug("This is the End of manage supplier");
 		return mv;
 	}
 
 	@RequestMapping("/manage_Products")
-	public ModelAndView manageProducts() {
-		//log.debug("running manage categorier");
-		ModelAndView mv = new ModelAndView("/admin/AdminHome");
-		mv.addObject("isUserClickedProducts", "true");
+	public ModelAndView manageProduct() {
+
+		log.debug("This is in the manage Products");
+
+		session.getAttribute("loggedInUser");
+
+		ModelAndView mv = new ModelAndView("/Admin/AdminHome");
+
 		List<Product> productList = productDAO.list();
-		mv.addObject("productList", productList);
-		mv.addObject("product", product);//
-		//log.debug("ending manage categorier");
-		return mv;
-	}
-	
-	
-	@RequestMapping("/manage_Suppliers")
-	public ModelAndView manageSuppliers() {
-		//log.debug("running manage categorier");
-		ModelAndView mv = new ModelAndView("/admin/AdminHome");
-		mv.addObject("isUserClickedSupplier", "true");
+		
 		List<Supplier> supplierList = supplierDAO.list();
+		
+		List<Category> categoryList = categoryDAO.list();
+
+		mv.addObject("productList", productList);
+
+		mv.addObject("product", product);
+		
 		mv.addObject("supplierList", supplierList);
-		mv.addObject("supplier", supplier);//
-		//log.debug("ending manage categorier");
+
+		mv.addObject("supplier", supplier);
+		
+		mv.addObject("categoryList", categoryList);
+		
+		mv.addObject("category", category);
+
+		mv.addObject("isAdminClickedproducts", true);
+
+		log.debug("This is the End of manage products");
+
 		return mv;
+
 	}
-	
 
 }

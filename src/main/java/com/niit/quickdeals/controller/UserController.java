@@ -32,7 +32,7 @@ public class UserController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("from-reg") User user, Model model) {
-
+		  user.setRole("ROLE_USER");
 		if (userDAO.save(user) == true) {
 
 			model.addAttribute("mesg", "Successfully registred");

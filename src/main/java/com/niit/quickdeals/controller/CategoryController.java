@@ -9,79 +9,111 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.niit.quickdeals.categorymodel.Category;
 import com.niit.quickdeals.dao.CategoryDAO;
 
+
 @Controller
 public class CategoryController {
-
+	
+	//Category.jsp -addCategory ,deleteCategory,showCategoryList,updateCategory,editCategory
+	
 	private static Logger log = LoggerFactory.getLogger(CategoryController.class);
-
+	
 	@Autowired
 	private CategoryDAO categoryDAO;
-
+	
 	@Autowired
 	private Category category;
-
-	@RequestMapping(value = "/manage_categories", method = RequestMethod.GET)
-	public String listCategories(Model model) {
-
+	
+	@RequestMapping(value = "/list_categories", method = RequestMethod.GET)
+	public ModelAndView listCategories() {
+		
 		log.debug(" Starting of the method listCategories");
-		model.addAttribute("category", category);
-		model.addAttribute("categoryList", categoryDAO.list());
-		model.addAttribute("isAdminClickedCategories", "true");
+		
+		ModelAndView model = new ModelAndView ("/Admin/AdminHome");
+	
+		model.addObject("category", category);
+		model.addObject("categoryList", categoryDAO.list());
+		model.addObject("isAdminClickedCategories", "true");
 		log.debug(" End of the method listCategories");
-		return "/admin/AdminHome";
+		return model;
 	}
-
-	@RequestMapping(value = "/manage_category_add", method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute("category") Category category, Model model) {
-		log.debug(" Starting of the method addCategory");
-		log.info("id:" + category.getId());
-		if (categoryDAO.saveOrUpdate(category) == true) {
-
-			model.addAttribute("msg", "Successfully created/updated the caetgory");
-		} else {
-			model.addAttribute("msg", "not able created/updated the caetgory");
+	
+	
+	@RequestMapping(value = "/add_Category_Value" ,method = RequestMethod.POST)
+	public ModelAndView AddCategory(@ModelAttribute("category") Category category,@RequestParam String action)
+	
+	{
+		ModelAndView mv =new ModelAndView("/Admin/AdminHome");
+		
+		if(action.equals("save"))
+		{
+		log.debug(" Starting of the method addcategory");
+		category.setId(category.getId());
+		category.setName(category.getName());
+		category.setDescription(category.getDescription());
+		
+		if(categoryDAO.saveOrUpdate(category)){
+			mv.addObject("message", "Succesfully created");
 		}
-		model.addAttribute("category", category);
-		model.addAttribute("categoryList", categoryDAO.list());
-		model.addAttribute("isAdminClickedCategories", "true");
-		log.debug(" Ending of the method addCategory");
-		return "/admin/AdminHome";
+		else
+		{
+			mv.addObject("message", "Not able to create the Category");
+		}
+		log.debug(" End of the method addCategories");
+		}
+		
+		
+		mv.addObject("category", category);
+		mv.addObject("categoryList", categoryDAO.list());
+		mv.addObject("isAdminClickedCategories", "true");
+		
+		
+		
+	return mv;
 	}
-
-	@RequestMapping("manage_category_remove/{id}")
-	// public ModelAndView deleteCategory(@PathVariable("id") String id, Model
-	// model) throws Exception {
-	public String deleteCategory(@PathVariable("id") String id, Model model) throws Exception {
+	
+	
+	
+	@RequestMapping(value = "manage_category_delete/{id}")
+	public ModelAndView deleteCategory(@PathVariable("id") String id, Model model)
+	
+	{
+		log.debug(" Starting of the method deletecategory");
+		
 		boolean flag = categoryDAO.delete(id);
-
-		String msg = "Successfully done the operation";
-		if (flag != true) {
-			msg = "The operation could not success";
+		String msg ="Succesfully done Operation";
+		
+		if(flag==false){
+			msg ="The delete operation could not be done";
 		}
-		/*
-		 * model.addAttribute("category", category);
-		 * model.addAttribute("categoryList", this.categoryDAO.list());
-		 */
 		model.addAttribute("msg", msg);
-		// ModelAndView mv = new ModelAndView("forward:/manage_categories");
-		// return mv;
-
-		return "forward:/manage_categories";
+		ModelAndView mv = new ModelAndView("forward:/list_categories");
+		
+		log.debug(" End of the method deleteCategories");
+	return mv;
+	
 	}
-
+	
+	//Deleteing the Id from the table
+	
 	@RequestMapping("manage_category_edit/{id}")
 	public String editCategory(@PathVariable("id") String id, Model model) {
-		// categoryDAO.saveOrUpdate(category);
+		 
 		log.debug(" Starting of the method editCategory");
 
 		category = categoryDAO.getCategoryByID(id);
-		// model.addAttribute("category", category);
+	
+		//model.addAttribute("category", category);
 		log.debug(" End of the method editCategory");
-		return "forward:/manage_categories";
-	}
-
+		return "forward:/list_categories";
+	}	
+	
+	
+	
+	
 }
