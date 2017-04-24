@@ -176,12 +176,6 @@ public class ProductController {
 		return "/home";
 	}	
 	
-	@RequestMapping("/proDetails/logout")
-	public String productDetailsLogout(@PathVariable("id") String id, Model model) {
-		
-		model.addAttribute("product",productDAO.getProductByID(id));
-		model.addAttribute("thisIsHome", true);
-		return "/home";
-	}	
+	
 	
 }

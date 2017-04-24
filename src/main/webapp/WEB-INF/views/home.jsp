@@ -40,11 +40,11 @@
 	</c:if>
 
 	
-<%-- 	<c:if test="${isAdmin==true}">
-		<jsp:include page="Admin/AdminHome.jsp"></jsp:include>
+	<c:if test="${checkout==true}">
+		<jsp:include page="checkout.jsp"></jsp:include>
 
 	</c:if>
- --%>
+ 
 	<c:if test="${isUserClickedLogin==true}">
 		<jsp:include page="login.jsp"></jsp:include>
 
@@ -55,7 +55,7 @@
 	</c:if>
 
 
-<c:if test="${ShowCart==true}">
+<c:if test="${displayCart==true}">
 		<jsp:include page="cart.jsp"></jsp:include>
 	</c:if>
 

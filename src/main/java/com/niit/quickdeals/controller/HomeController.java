@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -87,6 +88,35 @@ private SupplierDAO supplierDAO;
 	}
 	
 	
+
+	@RequestMapping("/home")
+	public ModelAndView landingpage() {
+	//	log.debug("running landing page");
+		System.out.println("starting the method showing homepage");
+		// specifying which page you have to navigate
+		ModelAndView mv = new ModelAndView("/home");
+		session.setAttribute("category", category);
+		session.setAttribute("product", product);
+		session.setAttribute("supplier", supplier);
+		session.setAttribute("categoryList", categoryDAO.list());
+		session.setAttribute("producList", productDAO.list());
+		session.setAttribute("supplierList", supplierDAO.list());
+		
+		session.setAttribute("categoryList", categoryDAO.list());		
+		session.setAttribute("supplierList", supplierDAO.list());		
+		session.setAttribute("productList", productDAO.list());
+		
+		
+		
+		// mv.addObject("not empty"," welcome to quickdeals");
+		// show what data you have to carry on home page
+		mv.addObject("message", "welcome to quickdeals");
+		mv.addObject("thisIsHome", "true");
+		
+		
+		//log.debug("ending landing page");
+		return mv;
+	}
 
 	@RequestMapping("/login")
 	public ModelAndView loginpage() {
@@ -209,27 +239,24 @@ private SupplierDAO supplierDAO;
 		return mv;
 	}
 	
-	
+	/*@RequestMapping("/proDetails/logout")
+	public String productDetailsLogout(@PathVariable("id") String id, Model model) {
+		
+		model.addAttribute("product",productDAO.getProductByID(id));
+		model.addAttribute("thisIsHome", true);
+		return "redirect:/home";
+	}	*/
 	
 	@RequestMapping("/logout")
 	public ModelAndView logout() {
 		//log.debug("running logout  method");
-		ModelAndView mv = new ModelAndView("home");
+		ModelAndView mv = new ModelAndView("forward:/");
 		session.invalidate();
 		//mv.addObject("isUserClickLogout","true");
 	//	log.debug("endig logout  method");
 		mv.addObject("message", "welcome to quickdeals");
 		mv.addObject("thisIsHome", "true");
-		session.setAttribute("category", category);
-		session.setAttribute("product", product);
-		session.setAttribute("supplier", supplier);
-		session.setAttribute("categoryList", categoryDAO.list());
-		session.setAttribute("producList", productDAO.list());
-		session.setAttribute("supplierList", supplierDAO.list());
 		
-		session.setAttribute("categoryList", categoryDAO.list());		
-		session.setAttribute("supplierList", supplierDAO.list());		
-		session.setAttribute("productList", productDAO.list());
 		return mv;
 
 	}
@@ -237,7 +264,7 @@ private SupplierDAO supplierDAO;
 	@RequestMapping("/refresh")
 	public ModelAndView Home() {
 		//log.debug("running logout  method");
-		ModelAndView mv = new ModelAndView("home");
+		ModelAndView mv = new ModelAndView("forward:/home");
 		mv.isReference();
 		mv.addObject("thisIsHome", "true");
 		session.setAttribute("category", category);

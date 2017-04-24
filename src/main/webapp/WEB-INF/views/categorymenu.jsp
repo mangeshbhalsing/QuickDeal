@@ -36,8 +36,8 @@
 					
 					
 					
-					<li>	<a href="all"><img align="right"
-							src="resources/images/cart.png" style="width: 50px;"></a></li>
+					<li>	<a href="allProducts" class="glyphicon glyphicon-shopping-cart" style="font-size: 35px;"><!-- <img align="right"
+							src="resources/images/cart.png" style="width: 50px;"> --></a></li>
 
 					</c:if>
 					<c:if test="${empty loginMessage}">

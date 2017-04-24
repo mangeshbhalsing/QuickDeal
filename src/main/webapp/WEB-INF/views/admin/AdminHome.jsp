@@ -54,14 +54,14 @@ a {
 	<!-- ADD 3 LINK to manage   -->
 
 
+<h2 style="font-family:sans-serif"><center>
+	<a href="manage_Categories">Manage Category</a>&nbsp;&nbsp;
 
-	<a href="manage_Categories">Manage Category</a>
+	<a href="manage_Products">Manage Product</a>&nbsp;&nbsp;
 
-	<a href="manage_Products">Manage Product</a>
-
-	<a href="manage_Suppliers">Manage Supplier</a>
-
-    
+	<a href="manage_Suppliers">Manage Supplier</a>&nbsp;&nbsp;
+</center>
+   </h2> 
     
     <br>
 
