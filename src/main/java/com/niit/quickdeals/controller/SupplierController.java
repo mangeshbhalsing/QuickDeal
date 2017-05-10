@@ -20,111 +20,127 @@ import com.niit.quickdeals.dao.SupplierDAO;
 @Controller
 public class SupplierController {
 	
-	//Supplier.jsp -addSupplier ,deleteSupplier,showSupplierList,updateSupplier,editSupplier
+	private static Logger log = LoggerFactory.getLogger(SupplierController.class);
 	
-		private static Logger log = LoggerFactory.getLogger(SupplierController.class);
+	
+	@Autowired
+	private Supplier supplier;
+	
+	@Autowired
+	private SupplierDAO supplierDAO;
+	
+	
+	
+	@RequestMapping(value = "/list_Suppliers", method = RequestMethod.GET)
+	public ModelAndView listSuppliers() {
 		
+		log.debug(" Starting of the method listSuppliers");
 		
-		@Autowired
-		private Supplier supplier;
+		ModelAndView model = new ModelAndView ("/Admin/AdminHome");
+	
+		model.addObject("supplier", supplier);
+		model.addObject("supplierList", supplierDAO.list());
+		model.addObject("isAdminClickedSuppliers", "true");
+		log.debug(" End of the method listSuppliers");
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/add_Supplier_Value" ,method = RequestMethod.POST)
+	public ModelAndView AddSupplier(@ModelAttribute("supplier") Supplier supplier,@RequestParam String action)
+	
+	{
 		
-		@Autowired
-		private SupplierDAO supplierDAO;
-		
-		
-		
-		@RequestMapping(value = "/list_Suppliers", method = RequestMethod.GET)
-		public ModelAndView listSuppliers() {
-			
-			log.debug(" Starting of the method listSuppliers");
-			
-			ModelAndView model = new ModelAndView ("/Admin/AdminHome");
-		
-			model.addObject("supplier", supplier);
-			model.addObject("supplierList", supplierDAO.list());
-			model.addObject("isAdminClickedSuppliers", "true");
-			log.debug(" End of the method listSuppliers");
-			return model;
-		}
-		
-		
-		@RequestMapping(value = "/add_Supplier_Value" ,method = RequestMethod.POST)
-		public ModelAndView AddSupplier(@ModelAttribute("supplier") Supplier supplier,@RequestParam String action)
-		
-		{
-			
-//			if(result.hasErrors()){
-//				ModelAndView mv =new ModelAndView("/Admin/AdminHome");
-//				
-//				mv.addObject("message", " Supplier Binding has error");
-//				}
+//		if(result.hasErrors()){
+//			ModelAndView mv =new ModelAndView("/Admin/AdminHome");
 //			
-			ModelAndView mv =new ModelAndView("/Admin/AdminHome");
-			
-			if(action.equals("save"))
+//			mv.addObject("message", " Supplier Binding has error");
+//			}
+//		
+		ModelAndView mv =new ModelAndView("/Admin/AdminHome");
+		
+		if(action.equals("save"))
+		{
+		log.debug(" Starting of the method addSupplier");
+		supplier.setId(supplier.getId());
+		supplier.setName(supplier.getName());
+		supplier.setAddress(supplier.getAddress());
+		
+			if(supplierDAO.saveOrUpdate(supplier))
 			{
-			log.debug(" Starting of the method addSupplier");
+				
+					mv.addObject("message", "Succesfully created");
+			}
+			else
+			{
+					mv.addObject("message", "Not able to create the Supplier");
+			}
+				log.debug(" End of the method addSuppliers");
+		}
+		else if (action.equals("renew"))
+		{
+			log.debug(" Starting of the method updateSupplier");
 			supplier.setId(supplier.getId());
 			supplier.setName(supplier.getName());
 			supplier.setAddress(supplier.getAddress());
 			
-				if(supplierDAO.save(supplier))
-				{
-					
-						mv.addObject("message", "Succesfully created");
-				}
-				else
-				{
-						mv.addObject("message", "Not able to create the Supplier");
-				}
-					log.debug(" End of the method addSuppliers");
+			if(supplierDAO.saveOrUpdate(supplier))
+			{
+				
+				mv.addObject("message", "Succesfully updated");
 			}
-		
-			mv.addObject("supplier", supplier);
-			mv.addObject("supplierList", supplierDAO.list());
-			mv.addObject("isAdminClickedSuppliers", "true");
+			else
+			{
+				mv.addObject("message", "Not able to update the Supplier");
+			}
+			log.debug(" End of the method updateSuppliers");
 			
 			
-			
-		return mv;
 		}
 		
+		mv.addObject("supplier", supplier);
+		mv.addObject("supplierList", supplierDAO.list());
+		mv.addObject("isAdminClickedSuppliers", "true");
 		
 		
-		@RequestMapping(value = "manage_Supplier_delete/{id}")
-		public ModelAndView deleteSupplier(@PathVariable("id") String id, Model model)
 		
-		{
-			log.debug(" Starting of the method deleteSupplier");
-			
-			boolean flag = supplierDAO.delete(id);
-			String msg ="Succesfully done Operation";
-			
-			if(flag==false){
-				msg ="The delete operation could not be done";
-			}
-			model.addAttribute("msg", msg);
-			ModelAndView mv = new ModelAndView("forward:/list_Suppliers");
-			
-			log.debug(" End of the method deleteSuppliers");
-		return mv;
+	return mv;
+	}
+	
+	
+	
+	@RequestMapping(value = "manage_Supplier_delete/{id}")
+	public ModelAndView deleteSupplier(@PathVariable("id") String id, Model model)
+	
+	{
+		log.debug(" Starting of the method deleteSupplier");
 		
+		boolean flag = supplierDAO.delete(id);
+		String msg ="Succesfully done Operation";
+		
+		if(flag==false){
+			msg ="The delete operation could not be done";
 		}
+		model.addAttribute("msg", msg);
+		ModelAndView mv = new ModelAndView("redirect:/list_Suppliers");
 		
-		//Deleteing the Id from the table
-		
-		@RequestMapping("manage_Supplier_edit/{id}")
-		public String editSupplier(@PathVariable("id") String id, Model model) {
-			 
-			log.debug(" Starting of the method editSupplier");
+		log.debug(" End of the method deleteSuppliers");
+	return mv;
+	
+	}
+	
+	//Deleteing the Id from the table
+	
+	@RequestMapping("manage_Supplier_edit/{id}")
+	public String editSupplier(@PathVariable("id") String id, Model model) {
+		 
+		log.debug(" Starting of the method editSupplier");
 
-			supplier = supplierDAO.getSupplierByID(id);
-		
-			//model.addAttribute("Supplier", Supplier);
-			log.debug(" End of the method editSupplier");
-			return "forward:/list_Suppliers";
-		}	
-		
-		
+		supplier = supplierDAO.getSupplierByID(id);
+	
+		//model.addAttribute("Supplier", Supplier);
+		log.debug(" End of the method editSupplier");
+		return "redirect:/list_Suppliers";
+	}			
 
 }

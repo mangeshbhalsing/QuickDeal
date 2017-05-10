@@ -19,9 +19,7 @@ import com.niit.quickdeals.dao.CategoryDAO;
 @Controller
 public class CategoryController {
 	
-	//Category.jsp -addCategory ,deleteCategory,showCategoryList,updateCategory,editCategory
-	
-	private static Logger log = LoggerFactory.getLogger(CategoryController.class);
+private static Logger log = LoggerFactory.getLogger(CategoryController.class);
 	
 	@Autowired
 	private CategoryDAO categoryDAO;
@@ -66,7 +64,26 @@ public class CategoryController {
 		}
 		log.debug(" End of the method addCategories");
 		}
-		
+		else if (action.equals("renew"))
+		{
+			log.debug(" Starting of the method updatecategory");
+			category.setId(category.getId());
+			category.setName(category.getName());
+			category.setDescription(category.getDescription());
+			
+			if(categoryDAO.saveOrUpdate(category))
+			{
+				
+				mv.addObject("message", "Succesfully updated");
+			}
+			else
+			{
+				mv.addObject("message", "Not able to update the Category");
+			}
+			log.debug(" End of the method updateCategories");
+			
+			
+		}
 		
 		mv.addObject("category", category);
 		mv.addObject("categoryList", categoryDAO.list());
@@ -92,7 +109,7 @@ public class CategoryController {
 			msg ="The delete operation could not be done";
 		}
 		model.addAttribute("msg", msg);
-		ModelAndView mv = new ModelAndView("forward:/list_categories");
+		ModelAndView mv = new ModelAndView("redirect:/list_categories");
 		
 		log.debug(" End of the method deleteCategories");
 	return mv;
@@ -110,7 +127,7 @@ public class CategoryController {
 	
 		//model.addAttribute("category", category);
 		log.debug(" End of the method editCategory");
-		return "forward:/list_categories";
+		return "redirect:/list_categories";
 	}	
 	
 	

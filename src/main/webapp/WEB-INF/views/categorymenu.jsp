@@ -36,16 +36,17 @@
 					
 					
 					
-					<li>	<a href="allProducts" class="glyphicon glyphicon-shopping-cart" style="font-size: 35px;"><!-- <img align="right"
+					<li>	<a href="myCart" class="glyphicon glyphicon-shopping-cart" style="font-size: 35px;"><!-- <img align="right"
 							src="resources/images/cart.png" style="width: 50px;"> --></a></li>
 
 					</c:if>
+					
 					<c:if test="${empty loginMessage}">
 						<li><a href="login"><span
 								class="glyphicon glyphicon-user"></span>My Account</a></li>
 					</c:if>
 					<c:if test="${not empty loginMessage}">
-						<li><a href="logout"><span
+						<li><a href="j_spring_security_Logout"><span
 								class="glyphicon glyphicon-log-out" a></span> Logout</a></li>
 					</c:if>
 

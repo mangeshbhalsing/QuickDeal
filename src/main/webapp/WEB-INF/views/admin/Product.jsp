@@ -31,7 +31,7 @@ ${message}<br>
 
 	<div class="panel panel-default col-sm-8 col-sm-offset-2">
 
-		<div class="row panel-heading"><h3><span class="glyphicon glyphicon-dashboard"></span>  <b>Prodcut Details</b></h3></div>
+		<div class="row panel-heading"><h3><span class="glyphicon glyphicon-dashboard"></span>  <b>ProDuct DeTaiLs</b></h3></div>
 
 		<div class="panel-body">
 		
@@ -135,7 +135,8 @@ ${message}<br>
 					
 					
 					<input type="submit" name=action value="save" class="btn btn-primary"/>
-					 
+					
+					 <input type="Submit" name=action value="renew" class="btn btn-primary"/> 
 					 
 			</form:form>
 		</div>

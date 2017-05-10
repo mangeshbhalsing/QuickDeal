@@ -23,7 +23,7 @@ height:75vh;
   <hr>
  
   <p class="lead">
-    <a class="btn btn-primary btn-sm" href="home" role="button">Continue to homepage</a>
+    <a class="btn btn-primary btn-sm" href="home" role="button">Continue Shopping</a>
   </p>
 </div>
 </center>

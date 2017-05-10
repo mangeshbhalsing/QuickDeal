@@ -10,7 +10,7 @@
 
 </head>
 <body>
-	${msg}
+${msg}
 	<br> ${message }
 	<br>
 	<div class="container">
@@ -19,7 +19,8 @@
 
 			<div class="row panel-heading">
 				<h3>
-			<center>		<span class=""></span> <b>Category Details</b></center>
+					<span class="glyphicon glyphicon-dashboard"></span> <b>CaTeGoRy
+						DeTaILs</b>
 				</h3>
 			</div>
 
@@ -64,6 +65,10 @@
 					<br>
 					<input type="submit" name=action value="save"
 						class="btn btn-primary" />
+
+					<input type="Submit" name=action value="renew"
+						class="btn btn-primary" />
+
 				</form:form>
 			</div>
 		</div>

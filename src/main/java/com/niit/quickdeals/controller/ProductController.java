@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -13,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +36,7 @@ import com.niit.quickdeals.dao.SupplierDAO;
 @Controller
 public class ProductController {
 	
-	//product.jsp -addproduct ,deleteproduct,showproductList,updateproduct,editproduct
-	
-	private static Logger log = LoggerFactory.getLogger(ProductController.class);
+private static Logger log = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
 	private ProductDAO productDAO;
@@ -54,6 +55,9 @@ public class ProductController {
 	
 	@Autowired
 	private SupplierDAO supplierDAO;
+	
+	@Autowired
+	private HttpSession session;
 	
 
 	@RequestMapping(value = "/list_products" ,method = RequestMethod.GET)
@@ -103,6 +107,7 @@ public class ProductController {
 			
 			productDAO.saveOrUpdate(product);
 			
+			
 			MultipartFile file = product.getFile();
 			String originalFile = file.getOriginalFilename();
 
@@ -122,6 +127,29 @@ public class ProductController {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
+		}else {
+			productDAO.saveOrUpdate(product);
+			
+			MultipartFile file = product.getFile();
+			String originalFile = file.getOriginalFilename();
+
+			String filepath = request.getSession().getServletContext().getRealPath("resources/images/");
+			System.out.println("File path is " + filepath);
+			String filename = filepath + "\\" + product.getId() + ".jpg";
+			System.out.println("File path is " + filepath);
+
+			try {
+				byte image[] = product.getFile().getBytes();
+				BufferedOutputStream bof = new BufferedOutputStream(new FileOutputStream(filename));
+				bof.write(image);
+				bof.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+
 		}
 		model.addAttribute("product", product);
 		model.addAttribute("productList", productDAO.list());
@@ -147,7 +175,7 @@ public class ProductController {
 			msg ="The delete operation could not be done";
 		}
 		model.addAttribute("msg", msg);
-		ModelAndView mv = new ModelAndView("forward:/list_products");
+		ModelAndView mv = new ModelAndView("redirect:/list_products");
 		
 		log.debug(" End of the method deleteProducts");
 	return mv;
@@ -165,10 +193,24 @@ public class ProductController {
 	
 		//model.addAttribute("product", product);
 		log.debug(" End of the method editproduct");
-		return "forward:/list_products";
-	}	
+		return "redirect:/list_products";
+	}
 	
-	@RequestMapping("/proDetails/{id}")
+	@RequestMapping("details_get/{id}")
+	public ModelAndView viewdetails(@PathVariable("id") String id){
+		
+		log.debug(" Starting of the method deatils product");
+		ModelAndView mv =  new ModelAndView("/home");
+		session.setAttribute("isProductClicked","true");
+		mv.addObject("product",  productDAO.getProductByID(id));
+		mv.addObject("sucessMessage", "This is Product List");
+		
+		log.debug(" End of the method details product");
+		return mv;
+		
+	}
+	
+	@GetMapping("/proDetails/{id}")
 	public String productDetails(@PathVariable("id") String id, Model model) {
 		
 		model.addAttribute("product",productDAO.getProductByID(id));

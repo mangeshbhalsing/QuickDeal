@@ -57,7 +57,7 @@
                                 ${product.price}</p>
                         </div>
                         <div class="col-xs-12 col-md-6 col-sm-6">
-                         <a class="btn btn-success" href='<c:url value="addToCart/${product.id}"></c:url>'>Add to Cart</a>
+                         <a class="btn btn-success" href='<c:url value="myCart/add/${product.id}"></c:url>'>Add to Cart</a>
                         </div>
                     </div>
                 </div>

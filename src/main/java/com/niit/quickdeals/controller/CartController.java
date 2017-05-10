@@ -1,6 +1,7 @@
 package com.niit.quickdeals.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.jws.WebParam.Mode;
 import javax.servlet.http.HttpSession;
@@ -39,7 +40,7 @@ public class CartController {
 	@Autowired
 	private HttpSession session;
 
-	@RequestMapping(value = "/allProducts", method = RequestMethod.GET)
+	@RequestMapping(value = "/myCart", method = RequestMethod.GET)
 	public String myCart(Model model) {
 		log.debug("Starting of the method myCart");
 		model.addAttribute("myCart", new MyCart());
@@ -70,10 +71,57 @@ public class CartController {
 		}
 		log.debug("Ending of the method myCart");
 		return "/home";
+			
 	}
+	/*-----------------------------------------------------------------------------------------------------------------------------*/
+	
+	@RequestMapping("/remove_all")
+	public ModelAndView showlastPage()
+	{
+
+		log.debug("This is ***************lastPage");
+		
+		String loggedInUserid = (String) session.getAttribute("loggedInUserID");
+		
+		log.info("the logged in ********USER ID***********"+ loggedInUserid );
+		
+		if (loggedInUserid == null) {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			loggedInUserid = auth.getName();
+			Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)   auth.getAuthorities();
+			authorities.contains("ROLE_USER");
+			
+		}
+		
+		log.info("the logged in ********USER ID***********"+ loggedInUserid );
+		
+		List<MyCart> cartlist = cartDAO.list(loggedInUserid);
+		
+		int catsize = cartDAO.list(loggedInUserid).size();
+		
+		log.info("the ****SIZE IS******"+catsize);
+	
+		for(MyCart listall : cartlist)
+		{
+			
+			myCart.setId(listall.getId());;
+			
+			cartDAO.deleteNow(myCart);
+			
+			log.info("****THE CATSIZE**** "+catsize);
+		}
+		
+		ModelAndView mv = new ModelAndView("/home");
+		mv.addObject("displayCart", "true");
+		
+		log.debug("This is end ************of lastpage");
+		return mv;
+	}
+	
+	/*-----------------------------------------------------------------------------------------------------------------------------*/
 
 	// For add and update myCart both
-	@RequestMapping(value = "addToCart/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "myCart/add/{id}", method = RequestMethod.GET)
 	public ModelAndView addToCart(@PathVariable("id") String id) {
 		log.debug("Starting of the method addToCart" + id);
 		// get the product based on product id
@@ -107,7 +155,13 @@ public class CartController {
 		return mv;
 
 	}
-
+	@GetMapping("/addaddress")
+	public ModelAndView addAddress() {
+		ModelAndView mv = new ModelAndView("/home");
+		mv.addObject("addaddress", true);
+		return mv;
+	}
+	
 	@GetMapping("/checkout")
 	public ModelAndView checkout() {
 		ModelAndView mv = new ModelAndView("/home");
@@ -128,7 +182,7 @@ public class CartController {
 			msg = "The delete operation could not be done";
 		}
 		model.addAttribute("msg", msg);*/
-		ModelAndView mv = new ModelAndView("forward:/allProducts");
+		ModelAndView mv = new ModelAndView("redirect:/myCart");
 
 		log.debug(" End of the method deleteProducts");
 		return mv;
