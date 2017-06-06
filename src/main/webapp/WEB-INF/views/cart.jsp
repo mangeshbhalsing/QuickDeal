@@ -255,7 +255,7 @@ label {
 		<center>
 		
 			<a class="btn btn-success" href="remove_all">Remove all</a>
-			<a class="btn btn-success" href="addaddress">Add_Address</a>
+			<a class="btn btn-success" href="addaddress">CHECK OUT</a>
 		
 		</center>
 		

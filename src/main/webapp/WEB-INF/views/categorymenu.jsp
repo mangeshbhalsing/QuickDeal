@@ -24,7 +24,7 @@
 
 					<c:forEach items="${categoryList}" var="category">
 
-						<li><a href="">${category.name}</a></li>
+						<li><a href="${category.id}">${category.name}</a></li>
 					</c:forEach>
 
 

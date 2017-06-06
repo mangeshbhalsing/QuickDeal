@@ -57,13 +57,13 @@
 						<input type="text" placeholder="Country" class="form-control">
 					</div>
 				</div>
-				<a href="checkout"> out</a>
+				
 
 
 				<div class="pull-right">
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<a class="btn btn-success" href="checkout">CHECK-OUT</a>
+							<a class="btn btn-success" href="remove_all_now">CHECK-OUT</a>
 						</div>
 					</div>
 				</div>

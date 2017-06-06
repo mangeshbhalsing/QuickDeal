@@ -1,7 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Category Page</title>
@@ -10,17 +12,21 @@
 
 </head>
 <body>
-${msg}
-	<br> ${message }
-	<br>
+	<h3 style="background-color:#83BAC9">
+		<center>${msg}</center>
+		<br>
+		<center>${message }</center>
+	</h3>
 	<div class="container">
 
 		<div class="panel panel-default col-sm-8 col-sm-offset-2">
 
 			<div class="row panel-heading">
 				<h3>
-					<span class="glyphicon glyphicon-dashboard"></span> <b>CaTeGoRy
-						DeTaILs</b>
+					<center>
+						<span class="glyphicon glyphicon-dashboard"></span> <b>Category
+							Details</b>
+						<center>
 				</h3>
 			</div>
 
@@ -66,14 +72,13 @@ ${msg}
 					<input type="submit" name=action value="save"
 						class="btn btn-primary" />
 
-					<input type="Submit" name=action value="renew"
-						class="btn btn-primary" />
+				<!-- 	<input type="Submit" name=action value="renew"
+						class="btn btn-primary" /> -->
 
 				</form:form>
 			</div>
 		</div>
-		<br>
-		<br>
+		<br> <br>
 		<c:if test="${!empty categoryList}">
 			<table class="table table-striped">
 				<thead>
@@ -104,6 +109,6 @@ ${msg}
 
 			</table>
 		</c:if>
-		</div>
+	</div>
 </body>
 </html>

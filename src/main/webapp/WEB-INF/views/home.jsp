@@ -23,8 +23,26 @@
 
 <body>
 
+
 	<jsp:include page="categorymenu.jsp"></jsp:include>
-	<h2 class="msgs">
+	
+	<c:if test="${showMe}">
+	
+	<c:forEach items="${pro}" var="proo">
+	sefi
+	<c:if test="${proo.category_id ==cat}">
+	
+	thus
+	</c:if>
+	
+	</c:forEach>
+	
+	</c:if>
+	
+	
+	
+	
+	<h2 style="background-color:#83BAC9">
 	<%-- <center>${msg}</center> --%>
 	<center>${errorMessage}</center>
 	<center>${loginMessage}</center>

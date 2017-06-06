@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   
 <head>
@@ -24,14 +25,22 @@
 
 </head>
 <body>
-${msg}<br>
-${message}<br>
+<h3 style="background-color:#83BAC9">
+<center>${msg}<br></center>
+<center>${message}<br><center>
+</h3>
+
 
 <div class="container">
 
 	<div class="panel panel-default col-sm-8 col-sm-offset-2">
 
-		<div class="row panel-heading"><h3><span class="glyphicon glyphicon-dashboard"></span>  <b>ProDuct DeTaiLs</b></h3></div>
+		<div class="row panel-heading"><h3>
+		
+		
+		<center><span class="glyphicon glyphicon-dashboard"></span>  <b>Product Details</b></center>
+		</h3>
+		</div>
 
 		<div class="panel-body">
 		
@@ -47,7 +56,7 @@ ${message}<br>
 							</form:label>
 						</div>
 						<div class="col-sm-9">
-							<form:input path="id"  class="form-control" />
+							<form:input path="id"  class="form-control" required="required" />
 							
 						</div>
 					</div>
@@ -58,7 +67,7 @@ ${message}<br>
 						<form:label path="">Product Name</form:label>
 					</div>
 					<div class="col-sm-9">
-						<form:input path="name" cssClass="form-control" required="" />
+						<form:input path="name" cssClass="form-control" required="required"/>
 						<span><form:errors path="name" cssClass="error" /></span>
 					</div>
 				</div>

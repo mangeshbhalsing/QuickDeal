@@ -111,8 +111,8 @@ public class CartController {
 			log.info("****THE CATSIZE**** "+catsize);
 		}
 		
-		ModelAndView mv = new ModelAndView("/home");
-		mv.addObject("displayCart", "true");
+		ModelAndView mv = new ModelAndView("redirect:/myCart");
+		//mv.addObject("displayCart", "true");
 		
 		log.debug("This is end ************of lastpage");
 		return mv;
@@ -120,6 +120,54 @@ public class CartController {
 	
 	/*-----------------------------------------------------------------------------------------------------------------------------*/
 
+
+	@RequestMapping("/remove_all_now")
+	public ModelAndView checkOut()
+	{
+
+		log.debug("This is ***************lastPage");
+		
+		String loggedInUserid = (String) session.getAttribute("loggedInUserID");
+		
+		log.info("the logged in ********USER ID***********"+ loggedInUserid );
+		
+		if (loggedInUserid == null) {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			loggedInUserid = auth.getName();
+			Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)   auth.getAuthorities();
+			authorities.contains("ROLE_USER");
+			
+		}
+		
+		log.info("the logged in ********USER ID***********"+ loggedInUserid );
+		
+		List<MyCart> cartlist = cartDAO.list(loggedInUserid);
+		
+		int catsize = cartDAO.list(loggedInUserid).size();
+		
+		log.info("the ****SIZE IS******"+catsize);
+	
+		for(MyCart listall : cartlist)
+		{
+			
+			myCart.setId(listall.getId());;
+			
+			cartDAO.deleteNow(myCart);
+			
+			log.info("****THE CATSIZE**** "+catsize);
+		}
+		
+		ModelAndView mv = new ModelAndView("/home");
+		mv.addObject("checkout", true);
+		
+		log.debug("This is end ************of lastpage");
+		return mv;
+	}
+	
+	
+	
+	/*-----------------------------------------------------------------------------------------------------------------------------*/
+	
 	// For add and update myCart both
 	@RequestMapping(value = "myCart/add/{id}", method = RequestMethod.GET)
 	public ModelAndView addToCart(@PathVariable("id") String id) {
@@ -162,12 +210,7 @@ public class CartController {
 		return mv;
 	}
 	
-	@GetMapping("/checkout")
-	public ModelAndView checkout() {
-		ModelAndView mv = new ModelAndView("/home");
-		mv.addObject("checkout", true);
-		return mv;
-	}
+	
 
 	@RequestMapping(value = "manage_cart_delete/{id}")
 	public ModelAndView deleteproduct(@PathVariable("id") String id, Model model)

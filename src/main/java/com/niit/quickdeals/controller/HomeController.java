@@ -247,7 +247,7 @@ public class HomeController {
 	@RequestMapping("/logout")
 	public ModelAndView logout() {
 		// log.debug("running logout method");
-		ModelAndView mv = new ModelAndView("forward:/");
+		ModelAndView mv = new ModelAndView("forward:/home");
 		session.invalidate();
 		// mv.addObject("isUserClickLogout","true");
 		// log.debug("endig logout method");
